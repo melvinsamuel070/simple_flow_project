@@ -37,16 +37,17 @@ jobs:
         steps: 
         - name: checkouts out
           uses: actions/checkout@v4
-          
+
         - name: "Use variable"       
           run: |
             echo $DOCKER_TAG
-            docker build -t theoafactor/simple_flow_app:$DOCKER_TAG .
-        - name: "Login to Docker Hub"
-          run: |
-                echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        - name: "Push to Docker Hub"
-          run: |  
-                docker push theoafactor/simple_flow_app:$DOCKER_TAG
+            docker build -t melvinsamuel070/simple_flow_app:$DOCKER_TAG .
 
+        - name: "Login to DockerHub"
+          run: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+        - name: "Push to Docker Hub"
+          run: |
+            docker push melvinsamuel070/simple_flow_app:$DOCKER_TAG
   
