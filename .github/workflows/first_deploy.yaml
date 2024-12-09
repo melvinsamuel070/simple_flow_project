@@ -44,7 +44,7 @@ jobs:
             docker build -t melvinsamuel070/simple_flow_app:$DOCKER_TAG .
         - name: "Login to Docker Hub"
           run: |
-                echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+                echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         - name: "Push to Docker Hub"
           run: |  
                 docker push melvinsamuel070/simple_flow_app:$DOCKER_TAG
