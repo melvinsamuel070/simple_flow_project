@@ -1,0 +1,46 @@
+name: "First Deployment"
+on: 
+    push: 
+        branches: 
+            - master
+
+jobs: 
+    calculate_version_number:
+        runs-on: ubuntu-latest
+        outputs: 
+            version: "2"
+        steps: 
+      
+        - name: "Create variable"
+          id: created-output
+          run: |
+            #date_value=$( echo $(date) )
+
+            #current_time=$( echo $date_value | cut -d" " -f5 )
+            # 14:58:51
+            # current_hour=$( echo $current_time | cut -d":" -f1 )
+            # current_min=$( echo $current_time | cut -d":" -f2 )
+            # current_sec=$( echo $current_time | cut -d":" -f3 )
+            # total="$current_hour"_"$current_min"_"$current_sec"
+            random_num=$( echo $RANDOM )
+            #version_number="$total"_"$random_num"
+            #echo "version_num=$( echo $version_number )" >> $GITHUB_OUTPUT
+            echo "version_num=$( echo $random_num )" >> $GITHUB_OUTPUT
+
+
+    build_image_job:
+        runs-on: ubuntu-latest
+        needs: 
+            - calculate_version_number
+        env: 
+            DOCKER_TAG: ${{ needs.calculate_version_number.outputs.version }}
+        steps: 
+        - name: checkouts out
+          uses: actions/checkout@v4
+          
+        - name: "Use variable"       
+          run: |
+            docker build -t theoafactor/simple_flow_app:$DOCKER_TAG .
+
+
+  
